@@ -3,9 +3,9 @@ package com.monaysmp.monayorder;
 import io.papermc.paper.dialog.Dialog;
 import io.papermc.paper.registry.data.dialog.DialogBase;
 import io.papermc.paper.registry.data.dialog.body.DialogBody;
-import io.papermc.paper.registry.data.dialog.DialogInput;
-import io.papermc.paper.registry.data.dialog.DialogType;
-import io.papermc.paper.registry.data.dialog.action.ActionButton;
+import io.papermc.paper.registry.data.dialog.input.DialogInput;
+import io.papermc.paper.registry.data.dialog.type.DialogType;
+import io.papermc.paper.registry.data.dialog.ActionButton;
 import io.papermc.paper.registry.data.dialog.action.DialogAction;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
@@ -19,6 +19,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
 import java.sql.*;
@@ -136,7 +138,7 @@ public final class MonayOrder extends JavaPlugin {
         Dialog dialog = Dialog.create(builder -> builder.empty()
             .base(DialogBase.builder(Component.text("Create Order"))
                 .body(List.of(
-                    DialogBody.item(held.asOne()),
+                    DialogBody.item(held.asOne()).build(),
                     DialogBody.plainMessage(Component.text("Listing: " + held.getType().name().toLowerCase(Locale.ROOT).replace('_', ' '))),
                     DialogBody.plainMessage(Component.text("Choose the quantity and total price. The item will only be removed after valid values are submitted."))
                 ))
