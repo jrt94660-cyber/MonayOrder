@@ -36,4 +36,8 @@ processResources {
 
 jar {
     archiveBaseName = 'MonayOrder'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
