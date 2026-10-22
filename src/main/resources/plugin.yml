@@ -1,0 +1,17 @@
+name: MonayOrder
+version: '${version}'
+main: com.monaysmp.monayorder.MonayOrder
+api-version: '26.2'
+author: MonaySMP
+description: Dialog-based player item Orders for MonaySMP
+softdepend: [Vault, ExcellentEconomy, Floodgate]
+commands:
+  order:
+    description: Open the MonaySMP Orders menu
+    usage: /order
+    aliases: [orders]
+permissions:
+  monayorder.use:
+    default: true
+  monayorder.admin:
+    default: op
