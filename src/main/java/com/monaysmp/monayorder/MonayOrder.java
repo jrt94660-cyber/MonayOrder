@@ -2,7 +2,7 @@ package com.monaysmp.monayorder;
 
 import io.papermc.paper.dialog.Dialog;
 import io.papermc.paper.registry.data.dialog.DialogBase;
-import io.papermc.paper.registry.data.dialog.DialogBody;
+import io.papermc.paper.registry.data.dialog.body.DialogBody;
 import io.papermc.paper.registry.data.dialog.DialogInput;
 import io.papermc.paper.registry.data.dialog.DialogType;
 import io.papermc.paper.registry.data.dialog.action.ActionButton;
