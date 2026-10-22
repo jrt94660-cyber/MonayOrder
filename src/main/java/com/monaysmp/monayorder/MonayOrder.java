@@ -19,10 +19,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import org.bukkit.util.io.BukkitObjectInputStream;
+import org.bukkit.util.io.BukkitObjectOutputStream;
 import java.sql.*;
-import java.util.Base64;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -33,7 +32,6 @@ public final class MonayOrder extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        saveDefaultConfig();
         setupDatabase();
         RegisteredServiceProvider<Economy> provider = getServer().getServicesManager().getRegistration(Economy.class);
         if (provider != null) economy = provider.getProvider();
@@ -89,7 +87,7 @@ public final class MonayOrder extends JavaPlugin {
                     DialogBody.plainMessage(Component.text("Browse player orders, search for an item, or list items from your inventory.")),
                     DialogBody.plainMessage(Component.text("Orders are paid through the server economy when a purchase is completed."))
                 ))
-                .inputs(List.of(DialogInput.text("query", Component.text("Search item"), 300, true, "", 80, null).build()))
+                .inputs(List.of(DialogInput.text("query", Component.text("Search item")).width(300).labelVisible(true).initial("").maxLength(80).build()))
                 .build())
             .type(DialogType.multiAction(List.of(
                 ActionButton.create(Component.text("Search Orders"), Component.text("Find matching player listings"), 150,
@@ -145,7 +143,7 @@ public final class MonayOrder extends JavaPlugin {
                 .inputs(List.of(
                     DialogInput.numberRange("amount", Component.text("Quantity"), 1.0F, (float) held.getAmount())
                         .step(1.0F).initial((float) held.getAmount()).width(300).build(),
-                    DialogInput.text("price", Component.text("Total price (number)"), 300, true, "100", 20, null).build()
+                    DialogInput.text("price", Component.text("Total price (number)")).width(300).labelVisible(true).initial("100").maxLength(20).build()
                 ))
                 .build())
             .type(DialogType.confirmation(
@@ -198,14 +196,14 @@ public final class MonayOrder extends JavaPlugin {
     }
 
     private byte[] serializeItem(ItemStack item) throws Exception {
-        try (ByteArrayOutputStream bytes = new ByteArrayOutputStream(); ObjectOutputStream out = new ObjectOutputStream(bytes)) {
+        try (ByteArrayOutputStream bytes = new ByteArrayOutputStream(); ObjectOutputStream out = new BukkitObjectOutputStream(bytes)) {
             out.writeObject(item);
             return bytes.toByteArray();
         }
     }
 
     private ItemStack deserializeItem(byte[] bytes) throws Exception {
-        try (ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(bytes))) {
+        try (ObjectInputStream in = new BukkitObjectInputStream(new ByteArrayInputStream(bytes))) {
             Object value = in.readObject();
             if (value instanceof ItemStack item) return item;
             throw new SQLException("Stored item data is invalid");
