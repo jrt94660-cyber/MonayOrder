@@ -12,4 +12,4 @@ MonaySMP's player-to-player item Orders plugin, targeting Paper 26.2 and Java 25
 Run `./gradlew clean build` with Java 25. The JAR will be in `build/libs/`.
 
 ## Status
-This repository is being initialized. Do not use on a live economy server until the order transaction, persistence, and UI flows are implemented and tested.
+The initial implementation includes a Java native-dialog search form, a Java native-dialog listing form, SQLite persistence, and a basic Vault-backed purchase path is planned but not yet fully wired into the command flow. Treat this as development code until GitHub Actions succeeds and the full purchase, cancellation, refund, and Bedrock fallback flows are tested. Do not install on a live economy server yet.
